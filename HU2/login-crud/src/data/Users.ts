@@ -14,7 +14,7 @@ export const users: User[]= [
         fullName:"Alejandra Garcia", 
         email:"alejita@gmail.com", 
         password:"4321", 
-        role: "user",
+        role: "admin",
         createdAt: new Date (2025/4/10)
     },
     {
@@ -22,7 +22,7 @@ export const users: User[]= [
         fullName:"Pepito Perez", 
         email:"Pepitin@gmail.com", 
         password:"2134", 
-        role: "admin",
+        role: "user",
         createdAt: new Date (2026/4/10)
     },
 ];

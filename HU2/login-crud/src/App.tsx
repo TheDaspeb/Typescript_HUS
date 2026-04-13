@@ -1,28 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Dashboard from './components/dashboard';
+import Login from './components/Login';
+import { users } from './data/Users';
+import { User } from './interfaces/User';
+import { UserStore } from './utils/UserStore';
+
+const userStore = new UserStore(users);
 
 function App() {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loginMessage, setLoginMessage] = useState('');
+  const [userList, setUserList] = useState<User[]>(userStore.list());
+
+  const refreshUsers = () => {
+    setUserList([...userStore.list()]);
+  };
+
+  const handleLogin = (user: User, message: string) => {
+    setCurrentUser(user);
+    setLoginMessage(message);
+    refreshUsers();
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setLoginMessage('');
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!currentUser ? (
+        <Login onlogin={handleLogin} />
+      ) : (
+        <Dashboard
+          currentUser={currentUser}
+          loginMessage={loginMessage}
+          store={userStore}
+          users={userList}
+          onRefresh={refreshUsers}
+          onLogout={handleLogout}
+        />
+      )}
     </div>
   );
 }
 
 export default App;
-
-//hola

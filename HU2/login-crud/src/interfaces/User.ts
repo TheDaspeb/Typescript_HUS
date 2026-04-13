@@ -13,7 +13,7 @@ export interface LoginCredentials {
 }
 
 export interface NewUserData {
-    fullname:string,
+    fullName:string,
     email:string,
     password:string,
     role?:string,
